@@ -40,39 +40,37 @@ const navItems: NavItem[] = [
   },
   {
     icon: <IoClipboardOutline />,
-    name: "Goal",
+    name: "Goal Evaluation",
+    path: "/goalevaluation"
+  },
+
+  {
+    icon: <IoClipboardOutline />,
+    name: "Goal Management ",
     subItems: [{ name: "Goal Creation", path: "/goalcreation", pro: false },
     { name: "Evaluation Template", path: "/evaluationtemplate", pro: false },
+    { name: " Assignment List", path: "/assignmentlist", pro: false },
     { name: "Employee Assignment", path: "/employeeassignment", pro: false },
     ]
   },
+
   {
     icon: <IoClipboardOutline />,
-    name: "Category Master",
-    path: "/category"
+    name: "Masters ",
+    subItems: [{ name: "Category Master", path: "/category", pro: false },
+    { name: "Category List", path: "/categoriesTable", pro: false },
+    { name: "Employee Assignment", path: "/employeeassignment", pro: false },
+    ]
   },
+
   {
     icon: <IoClipboardOutline />,
-    name: "Category List",
-    path: "/categoriesTable"
-  },
-  {
-    icon: <IoClipboardOutline />,
-    name: "Assignment List",
-    path: "/assignmentlist"
-  },
-  {
-    icon: <IoClipboardOutline />,
-    name: "Goal assessment Report",
+    name: "Reports",
     subItems: [{ name: "Assessment Summary Report", path: "/assessmentsummaryreport", pro: false },
     { name: "Assessment Detail Report", path: "/assessmentdetailreport", pro: false },
     { name: "Goalwise Assessment Report", path: "/assessmentgoalwisereport", pro: false },]
   },
-  {
-    icon: <IoClipboardOutline />,
-    name: "Goal Evaluation",
-    path: "/goalevaluation"
-  },
+  
 
   
 
