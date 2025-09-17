@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { IoIosArrowRoundDown } from "react-icons/io";
+import { useNavigate } from "react-router";
 
 interface AssignmentsList {
     id: string;
@@ -10,13 +11,14 @@ interface AssignmentsList {
 
 function AssignmwntList() {
     const [assignments, setAssignments] = useState<AssignmentsList[]>([
-        { id: "1", evaluation: "2011-03-3", status: "Open", assignedto: "Saji Jose" },
-        { id: "2", evaluation: "2015-03-3", status: "In progress", assignedto: "Saji Jose" },
-        { id: "3", evaluation: "2025-03-3", status: "Completed", assignedto: "Saji Jose" },
+        { id: "1", evaluation: "2024", status: "Completed", assignedto: "Tharique" },
+        { id: "2", evaluation: "2025", status: "Submitted", assignedto: "Adhil" },
+        { id: "3", evaluation: "2026", status: "Pending", assignedto: "Swetha" },
     ]);
 
     const [currentPage, setCurrentPage] = useState(1);
     const [rowsPerPage, setRowsPerPage] = useState(5);
+    const navigate = useNavigate()
 
     const indexOfLastRow = currentPage * rowsPerPage;
     const indexOfFirstRow = indexOfLastRow - rowsPerPage;
@@ -30,9 +32,13 @@ function AssignmwntList() {
         }
     };
 
+    const handleNavigation = ()=>{
+        navigate("/goalevaluation")
+    }
+
     return (
         <div className="bg-white border rounded-lg px-6 py-6 h-full">
-            <h1 className="text-xl font-medium pb-5">Assignment List</h1>
+            <h1 className="text-xl font-medium pb-5">Evaluation List</h1>
 
             <div className="border rounded-lg w-full overflow-x-auto">
                 <table className="w-full text-left">
@@ -59,12 +65,12 @@ function AssignmwntList() {
 
                     <tbody>
                         {assignments.map((item) => (
-                            <tr
+                            <tr 
                                 key={item.id}
-                                className="border-b hover:bg-gray-50  transition"
+                                className="border-b hover:bg-gray-50  transition" 
                             >
                                 <td className="py-3 px-4">{item.id}</td>
-                                <td className="py-3 px-4">{item.evaluation}</td>
+                                <td className="py-3 px-4 underline text-blue-500 cursor-pointer" onClick={handleNavigation}>{item.evaluation}</td>
                                 <td className="py-3 px-4">{item.status}</td>
                                 <td className="py-3 px-4">{item.assignedto}</td>
 

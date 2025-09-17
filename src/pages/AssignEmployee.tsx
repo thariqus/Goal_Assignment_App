@@ -6,6 +6,7 @@ import ReactDOM from "react-dom";
 import { FaRegCopy } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import { IoArrowForwardOutline } from "react-icons/io5";
+import Pagination from "../components/Pagination";
 
 interface TableValues {
   id: string;
@@ -18,7 +19,7 @@ function AssignEmployee() {
     { id: "2", name: "" },
   ]);
 
-  const [openDropdown, setOpenDropdown] = useState<{
+  const [openDropdownTable, setOpenDropdownTable] = useState<{
     type: "employee" | "goal" | null;
     rowId: string | null;
     pos: { top: number; left: number } | null;
@@ -33,7 +34,7 @@ function AssignEmployee() {
 
 
   const [selectedStatus, setSelectedStatus] = useState("Select Status");
-  const [openStatus, setOpenStatus] = useState(false);
+  const [openStatusDropdown, setOpenStatusDropdown] = useState(false);
   const [searchGoal, setSearchGoal] = useState<{ [key: string]: string }>({});
   const [searchEmployee, setSearchEmployee] = useState<{ [key: string]: string }>({});
   const [currentPage, setCurrentPage] = useState(1);
@@ -58,12 +59,12 @@ function AssignEmployee() {
     rowId: string,
     e: React.MouseEvent<HTMLButtonElement>
   ) => {
-    if (openDropdown.rowId === rowId && openDropdown.type === type) {
-      setOpenDropdown({ type: null, rowId: null, pos: null });
+    if (openDropdownTable.rowId === rowId && openDropdownTable.type === type) {
+      setOpenDropdownTable({ type: null, rowId: null, pos: null });
       return;
     }
     const rect = e.currentTarget.getBoundingClientRect();
-    setOpenDropdown({
+    setOpenDropdownTable({
       type,
       rowId,
       pos: { top: rect.bottom + window.scrollY, left: rect.left + window.scrollX },
@@ -75,8 +76,8 @@ function AssignEmployee() {
     const handleClickOutside = (event: MouseEvent) => {
       const target = event.target as HTMLElement;
       if (!target.closest(".dropdown-container")) {
-        setOpenDropdown({ type: null, rowId: null, pos: null });
-        setOpenStatus(false);
+        setOpenDropdownTable({ type: null, rowId: null, pos: null });
+        setOpenStatusDropdown(false);
       }
     };
     window.addEventListener("mousedown", handleClickOutside);
@@ -100,7 +101,7 @@ function AssignEmployee() {
           <input
             type="text"
             id="from"
-            className="py-1 focus:outline-none border w-full px-2 rounded-sm"
+            className="py-1 focus:outline-none border w-100 px-2 rounded-sm"
           />
         </div>
 
@@ -109,7 +110,7 @@ function AssignEmployee() {
           <input
             type="text"
             id="to"
-            className="py-1 focus:outline-none border w-full px-2 rounded-sm"
+            className="py-1 focus:outline-none border w-100 px-2 rounded-sm"
           />
         </div>
 
@@ -121,7 +122,7 @@ function AssignEmployee() {
               <button
                 type="button"
                 className="flex items-center gap-2 border bg-white rounded-md py-1 px-3"
-                onClick={() => setOpenStatus(!openStatus)}
+                onClick={() => setOpenStatusDropdown(!openStatusDropdown)}
               >
                 <span
                   className={
@@ -135,7 +136,7 @@ function AssignEmployee() {
                 <IoIosArrowDown style={{ color: "gray" }} />
               </button>
 
-              {openStatus && (
+              {openStatusDropdown && (
                 <div className="absolute left-30 mt-1 w-48 border rounded-md shadow-sm bg-white z-[1000]">
                   {/* Search inside dropdown */}
                   <div className="flex items-center border-b px-2 py-2">
@@ -159,8 +160,8 @@ function AssignEmployee() {
                           className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
                           onClick={() => {
                             setSelectedStatus(item);
-                            setSearchStatus(""); 
-                            setOpenStatus(false);
+                            setSearchStatus("");
+                            setOpenStatusDropdown(false);
                           }}
                         >
                           {item}
@@ -226,28 +227,28 @@ function AssignEmployee() {
                     </button>
                   </td>
 
-                  {openDropdown.rowId === row.id &&
-                    openDropdown.pos &&
+                  {openDropdownTable.rowId === row.id &&
+                    openDropdownTable.pos &&
                     ReactDOM.createPortal(
                       <div
                         className="absolute w-48 border rounded-md shadow-sm bg-white z-50 dropdown-container"
                         style={{
-                          top: openDropdown.pos.top,
-                          left: openDropdown.pos.left,
+                          top: openDropdownTable.pos.top,
+                          left: openDropdownTable.pos.left,
                         }}
                       >
                         <div className="flex items-center border-b px-2 py-2">
                           <CiSearch style={{ fontSize: "20px", color: "grey" }} />
                           <input
                             type="text"
-                            placeholder={`Search ${openDropdown.type}...`}
+                            placeholder={`Search ${openDropdownTable.type}...`}
                             value={
-                              openDropdown.type === "goal"
+                              openDropdownTable.type === "goal"
                                 ? (searchGoal[row.id] || "")
                                 : (searchEmployee[row.id] || "")
                             }
                             onChange={(e) => {
-                              if (openDropdown.type === "goal") {
+                              if (openDropdownTable.type === "goal") {
                                 setSearchGoal((prev) => ({ ...prev, [row.id]: e.target.value }));
                               } else {
                                 setSearchEmployee((prev) => ({
@@ -261,7 +262,7 @@ function AssignEmployee() {
                         </div>
                         <ul className="font-normal">
                           {(
-                            openDropdown.type === "goal"
+                            openDropdownTable.type === "goal"
                               ? ["Redesign Website", "Update UI", "Launch Campaign"].filter((item) =>
                                 item
                                   .toLowerCase()
@@ -277,7 +278,7 @@ function AssignEmployee() {
                               key={item}
                               className="px-4 py-2 hover:bg-gray-200 cursor-pointer text-black"
                               onClick={() => {
-                                if (openDropdown.type === "goal") {
+                                if (openDropdownTable.type === "goal") {
                                   setSelectedGoal((prev) => ({
                                     ...prev,
                                     [row.id]: item,
@@ -290,7 +291,7 @@ function AssignEmployee() {
                                   }));
                                   setSearchEmployee((prev) => ({ ...prev, [row.id]: "" }));
                                 }
-                                setOpenDropdown({ type: null, rowId: null, pos: null });
+                                setOpenDropdownTable({ type: null, rowId: null, pos: null });
                               }}
                             >
                               {item}
@@ -307,51 +308,14 @@ function AssignEmployee() {
           </table>
 
           {/* Pagination Controls */}
-          <div className="flex justify-between items-center mt-4 px-2">
-            <div className="flex items-center gap-2">
-              <span>Show</span>
-              <select
-                value={rowsPerPage}
-                onChange={(e) => {
-                  setRowsPerPage(Number(e.target.value));
-                  setCurrentPage(1);
-                }}
-                className="border rounded px-2 py-1"
-              >
-                <option value={5}>5</option>
-                <option value={10}>10</option>
-                <option value={20}>20</option>
-              </select>
-              <span>entries</span>
-            </div>
-
-            <div className="flex items-center gap-2 my-4">
-              <button
-                onClick={() => handlePageChange(currentPage - 1)}
-                disabled={currentPage === 1}
-                className="px-3 py-1 border rounded disabled:opacity-50"
-              >
-                Previous
-              </button>
-              {[...Array(totalPages)].map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => handlePageChange(i + 1)}
-                  className={`px-3 py-1 border rounded ${currentPage === i + 1 ? "bg-[#ffe4e6] text-gray-600" : ""
-                    }`}
-                >
-                  {i + 1}
-                </button>
-              ))}
-              <button
-                onClick={() => handlePageChange(currentPage + 1)}
-                disabled={currentPage === totalPages}
-                className="px-3 py-1 border rounded disabled:opacity-50"
-              >
-                Next
-              </button>
-            </div>
-          </div>
+          <Pagination
+            rowsPerPage={rowsPerPage}
+            setRowsPerPage={setRowsPerPage}
+            currentPage={currentPage}
+            setCurrentPage={setCurrentPage}
+            totalPages={totalPages}
+            handlePageChange={handlePageChange}
+          />
         </div>
       </div>
 
@@ -367,19 +331,19 @@ function AssignEmployee() {
         </button>
         <button
           type="button"
-          className="border rounded-sm py-1 px-5 bg-gray-100 flex gap-1 items-center"
+          className="rounded-sm py-1 px-5 bg-gray-100 flex gap-1 items-center"
         >
           <MdDeleteOutline style={{ fontSize: "20px" }} /> <span>Delete</span>
         </button>
         <button
           type="button"
-          className="border rounded-sm py-1 bg-[#ffe4e6] px-5 flex gap-1 items-center"
+          className=" rounded-sm py-1 bg-[#ffe4e6] px-5 flex gap-1 items-center"
         >
           <CiEdit style={{ fontSize: "20px" }} /> <span>Edit</span>
         </button>
         <button
           type="button"
-          className="border rounded-sm py-1 bg-[#ffe4e6] px-5 flex gap-1 items-center"
+          className=" rounded-sm py-1 bg-[#ffe4e6] px-5 flex gap-1 items-center"
         >
           <FaRegCopy style={{ fontSize: "20px" }} /> <span>Create Copy</span>
         </button>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router";
 
 interface CategoriesList {
   id: string;
@@ -15,6 +16,7 @@ function CategoriesTable() {
 
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(5);
+  const navigate= useNavigate()
 
   const indexOfLastRow = currentPage * rowsPerPage;
   const indexOfFirstRow = indexOfLastRow - rowsPerPage;
@@ -28,9 +30,16 @@ function CategoriesTable() {
     }
   };
 
+  const handleCategoryNavigation = ()=>{
+    navigate("/category")
+  }
+
   return (
     <div className="bg-white border rounded-lg px-6 py-6 h-full">
       <h1 className="text-xl font-medium pb-5">Categories List</h1>
+      <div className="flex justify-end mb-5">
+        <button className="bg-[#972E26] text-white rounded-lg flex justify-end px-3 py-2" onClick={handleCategoryNavigation}>Add new Category</button>
+      </div>
 
       <div className="border rounded-lg w-full overflow-x-auto">
         <table className="w-full text-left">

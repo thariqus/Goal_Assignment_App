@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router";
 import JHICON from "../images/JH.png"
+import jaleelholdings from "../images/jaleel holdings.png"
+
 
 // Assume these icons are imported from an icon library
 import {
@@ -38,37 +40,43 @@ const navItems: NavItem[] = [
     name: "Dashboard",
     path: "/",
   },
-  {
+   {
     icon: <IoClipboardOutline />,
-    name: "Goal Evaluation",
-    path: "/goalevaluation"
+    name: "My Evaluation List",
+    path: "/assignmentlist"
   },
-
-  {
+   {
     icon: <IoClipboardOutline />,
-    name: "Goal Management ",
-    subItems: [{ name: "Goal Creation", path: "/goalcreation", pro: false },
-    { name: "Evaluation Template", path: "/evaluationtemplate", pro: false },
-    { name: " Assignment List", path: "/assignmentlist", pro: false },
-    { name: "Employee Assignment", path: "/employeeassignment", pro: false },
+    name: "Masters",
+     subItems: [{ name: "Goal List", path: "/goallist", pro: false },
+    { name: "Category Master",  path: "/categoriesTable", pro: false },
+    
     ]
+   
   },
-
   {
     icon: <IoClipboardOutline />,
-    name: "Masters ",
-    subItems: [{ name: "Category Master", path: "/category", pro: false },
-    { name: "Category List", path: "/categoriesTable", pro: false },
-    { name: "Employee Assignment", path: "/employeeassignment", pro: false },
-    ]
+    name: "Evaluation Assessment SetUp",
+    path: "/evaluationtemplate"
   },
-
+ 
+  // {
+  //   icon: <IoClipboardOutline />,
+  //   name: "Category List",
+  //   path: "/categoriesTable"
+  // },
+ 
   {
     icon: <IoClipboardOutline />,
     name: "Reports",
     subItems: [{ name: "Assessment Summary Report", path: "/assessmentsummaryreport", pro: false },
     { name: "Assessment Detail Report", path: "/assessmentdetailreport", pro: false },
     { name: "Goalwise Assessment Report", path: "/assessmentgoalwisereport", pro: false },]
+  },
+   {
+    icon: <IoClipboardOutline />,
+    name: "Evaluation Activation List",
+    path: "/evaluationactivationlist"
   },
   
 
@@ -330,7 +338,7 @@ const AppSidebar: React.FC = () => {
             <>
               <img
                 className="dark:hidden"
-                src="https://digitrack.jaleelholdings.com/assets/jh_digitrack/jh-digitrack/assets/digitrack-logo-BSWK9l3q.png"
+                src={jaleelholdings}
                 alt="Logo"
                 width={150}
                 height={40}

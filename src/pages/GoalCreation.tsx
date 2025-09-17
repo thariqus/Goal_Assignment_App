@@ -200,9 +200,7 @@ function GoalCreation() {
           <button className="rounded-sm py-1 text-white bg-[#972e26] px-5">
             Submit
           </button>
-          <button className="rounded-sm py-1 px-5 bg-gray-100 flex gap-1 items-center">
-            <MdDeleteOutline style={{ fontSize: "20px" }} /> <span>Delete</span>
-          </button>
+          
           <button className="border rounded-sm py-1 bg-[#ffe4e6] px-5 flex gap-1 items-center">
             <CiEdit style={{ fontSize: "20px" }} /> <span>Edit</span>
           </button>

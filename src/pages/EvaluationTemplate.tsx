@@ -19,6 +19,7 @@ interface Tablevalues {
     weightage: number;
     details: string;
 }
+const employees = ["Tharique", "Adhil", "Aisha", "Meera"];
 
 
 
@@ -66,6 +67,9 @@ function EvaluationTemplate() {
     const [sortAsc, setSortAsc] = useState(true);
     const [openDropdown, setOpenDropdown] = useState<string | null>(null);
     const [selectedTitle, setSelectedTitle] = useState<string>("Select Title");
+    const [selectedEmployee, setSelectedEmployee] = useState<string>("Select Employee");
+    const [searchEmployee, setSearchEmployee] = useState("");
+    const [openEmployeeSideBox, setOpenEmployeeSidebox] = useState<boolean>(false);
 
     const toggleDropdown = (dropdownName: string) => {
         setOpenDropdown(openDropdown === dropdownName ? null : dropdownName);
@@ -124,81 +128,103 @@ function EvaluationTemplate() {
         }
     };
 
+    const handleSideBox = () => {
+        setOpenEmployeeSidebox(!openEmployeeSideBox)
+    }
+
 
     return (
         <div className='border h-full flex flex-col gap-5 rounded-lg bg-white px-6 py-10'>
 
-            <form action="" className=' h-full flex flex-col gap-5  bg-white  '>
-                <h1 className='text-xl font-medium pb-5'>Evaluation Template</h1>
-                {/* title Dropdown */}
-                <div className="relative dropdown-container">
-                    <div className="flex gap-12">
-                        <label>Title:</label>
-                        <div>
-                            <button
-                                type="button"
-                                className="flex items-center gap-2 border bg-white rounded-md py-1 px-3"
-                                onClick={() => toggleDropdown("title")}
-                            >
-                                <span className={selectedTitle === "Select Title" ? "text-gray-400" : "text-black"}>
-                                    {selectedTitle}
-                                </span>
-                                <IoIosArrowDown style={{ color: "gray" }} />
-                            </button>
+            <form action="" className=' h-full flex flex-col gap-5  bg-white  relative'>
+                <h1 className='text-xl font-medium pb-5'>Evaluation</h1>
+                <div className='flex gap-14'>
+                    <label htmlFor="name">Name:</label>
+                    <input type="text" placeholder='Enter Name' className='py-1 focus:outline-none border w-130 px-2 rounded-sm' />
 
-                            {openDropdown === "title" && (
-                                <div className="absolute left-25 mt-1 w-98 border rounded-md shadow-sm bg-white z-[1000]">
-                                    {/* Search inside dropdown */}
-                                    <div className="flex items-center border-b px-2 py-2">
-                                        <CiSearch
-                                            style={{ fontSize: "20px", color: "grey" }}
-                                        />
-                                        <input
-                                            type="text"
-                                            placeholder="Search Title..."
-                                            value={search}
-                                            onChange={(e) => setSearch(e.target.value)}
-                                            className="w-full px-2 outline-none"
-                                        />
+                </div>
+                {/* Employee dropdown */}
+                <div className='flex gap-5'>
+                    <div className="relative dropdown-container">
+                        <div className="flex gap-7">
+                            <label>Employee:</label>
+                            <div>
+                                <button
+                                    type="button"
+                                    className="flex items-center gap-2 border bg-white rounded-md py-1 px-3"
+                                    onClick={() => toggleDropdown("employee")}
+                                >
+                                    <span className={selectedEmployee === "Select Employee" ? "text-gray-400" : "text-black"}>
+                                        {selectedEmployee}
+                                    </span>
+                                    <IoIosArrowDown style={{ color: "gray" }} />
+                                </button>
+
+                                {openDropdown === "employee" && (
+                                    <div className="absolute left-35 mt-1 w-48 border rounded-md shadow-sm bg-white z-[1000]">
+                                        {/* Search inside employee */}
+                                        <div className="flex items-center border-b px-2 py-2">
+                                            <CiSearch style={{ fontSize: "20px", color: "grey" }} />
+                                            <input
+                                                type="text"
+                                                placeholder="Search Employee..."
+                                                value={searchEmployee}
+                                                onChange={(e) => setSearchEmployee(e.target.value)}
+                                                className="w-full px-2 outline-none"
+                                            />
+                                        </div>
+                                        <ul className="font-normal max-h-40 overflow-y-auto">
+                                            {employees
+                                                .filter(item => item.toLowerCase().includes(searchEmployee.toLowerCase()))
+                                                .map((item) => (
+                                                    <li
+                                                        key={item}
+                                                        className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                                                        onClick={() => {
+                                                            setSelectedEmployee(item);
+                                                            setOpenDropdown(null);
+                                                            setSearchEmployee("");
+                                                        }}
+                                                    >
+                                                        {item}
+                                                    </li>
+                                                ))}
+                                        </ul>
                                     </div>
-
-                                    {/* Filtered dropdown items */}
-                                    <ul className="font-normal max-h-40 overflow-y-auto">
-                                        {datas
-                                            .filter((item) =>
-                                                item.name
-                                                    .toLowerCase()
-                                                    .includes(search.toLowerCase())
-                                            )
-                                            .map((item) => (
-                                                <li
-                                                    key={item.id}
-                                                    className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-                                                    onClick={() => {
-                                                        setSelectedTitle(item.name);
-                                                        setOpenDropdown(null);
-                                                        setSearch(""); // clear search after selecting
-                                                    }}
-                                                >
-                                                    {item.name}
-                                                </li>
-                                            ))}
-                                    </ul>
-                                </div>
-                            )}
+                                )}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className='flex gap-10'>
-                    <label htmlFor="name">From:</label>
-                    <input type="text" placeholder='' className='py-1 focus:outline-none border w-130 px-2 rounded-sm' />
+                    <button type='button' className='bg-[#972E26] text-white text-sm px-2 rounded-md' onClick={handleSideBox}>{openEmployeeSideBox ? "Hide Box" : "Show My Child"}</button>
 
+                    {/* EmployeeSideBox  */}
+
+                    {
+                        openEmployeeSideBox && (
+                            <div className='absolute top-15 flex flex-col gap-4 right-0 bg-gray-100 px-5 w-100 py-8 rounded-md'>
+                                <div className='flex gap-4'>
+                                    <input type="checkbox" />
+                                    <p>Tharique</p>
+                                </div>
+                                 <div className='flex gap-4'>
+                                    <input type="checkbox" />
+                                    <p>Adhil</p>
+                                </div>
+                                 <div className='flex gap-4'>
+                                    <input type="checkbox" />
+                                    <p>Saji</p>
+                                </div>
+                                 <div className='flex gap-4'>
+                                    <input type="checkbox" />
+                                    <p>Sali</p>
+                                </div>
+                            </div>
+                        )
+                    }
                 </div>
 
-                <div className='flex gap-15'>
-                    <label htmlFor="name">To:</label>
-                    <input type="text" placeholder='' className='py-1 focus:outline-none border w-130 px-2 rounded-sm' />
-                </div>
+
+               
 
 
                 <div className='flex gap-12'>
@@ -218,20 +244,11 @@ function EvaluationTemplate() {
 
             </form>
 
-            <div className="flex justify-end ">
-                <button
-                    type="button"
-                    onClick={() => navigate("/goalcreation")}
-                    className="flex bg-[#972e26] text-white rounded-sm px-3 py-2 items-center gap-2"
-                >
-                    <IoAddSharp style={{ fontSize: "20px" }} />
-                    <span>Add New Goal</span>
-                </button>
-            </div>
 
 
 
-            <div className="overflow-hidden w-full rounded-xl border border-gray-200 mt-3 bg-white">
+
+            <div className="overflow-hidden w-full rounded-xl border border-gray-200 mt-5 bg-white">
                 {/* Search Bar */}
                 <div className="flex items-center border w-270 rounded-lg m-2 px-5 py-1 gap-1">
                     <CiSearch style={{ fontSize: "18px", color: "gray" }} />
@@ -337,22 +354,23 @@ function EvaluationTemplate() {
                 </div>
             </div>
 
-            {/* Buttons */}
-            <div className='flex gap-5 justify-center pt-15'>
-                <button type='button' className=' rounded-sm py-1 px-5 bg-gray-100 flex gap-1 items-center'>
-                    <MdDeleteOutline style={{ fontSize: "20px" }} />
-                    <span>Delete</span>
-                </button>
+            <div className='flex gap-10'>
+                <label htmlFor="name">Remark:</label>
+                <textarea placeholder='Enter Remark' className='py-1 focus:outline-none border w-130 h-20 px-2 rounded-sm' />
 
-                <button type='button' className=' rounded-sm py-1 text-white bg-[#972e26] px-5'>Submit</button>
+            </div>
+
+            {/* Buttons */}
+            <div className='flex gap-5 justify-center pt-10'>
+
+
+                <button type='button' className=' rounded-sm py-1 text-white bg-[#972e26] px-5'>Save</button>
 
                 <button className=' rounded-sm py-1  bg-[#ffe4e6] px-5 flex gap-1 items-center'>
                     <CiEdit style={{ fontSize: "20px" }} />
                     <span >Edit</span>
                 </button>
-                <button type='button' className='border rounded-sm py-1  bg-gray-100 px-5 flex gap-1 items-center'>
-                    <FaRegCopy style={{ fontSize: "20px" }} /> <span >Create Copy</span>
-                </button>
+
             </div>
 
 

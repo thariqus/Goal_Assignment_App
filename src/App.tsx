@@ -22,28 +22,33 @@ import Tasks from "./components/pages/Tasks";
 import CreatedByMe from "./components/pages/CreateByMe";
 import GoalCreation from "./pages/GoalCreation";
 import AssignEmployee from "./pages/AssignEmployee";
-import CategoryPage from "./components/pages/CategoryPage";
+import CategoryPage from "./pages/CategoryPage";
 import CategoriesTable from "./components/pages/CategoriesTable";
-import AssignmwntList from "./components/pages/AssignmentList";
-import EvaluationSummaryReport from "./components/pages/AssessmentSummaryReport";
+import AssignmwntList from "./pages/AssignmentList";
+import EvaluationSummaryReport from "./pages/AssessmentSummaryReport";
 import EvaluationDetailReport from "./pages/AssessmentDetailReport";
 import EvaluationGoalWiseReport from "./pages/AssessmentGoalWiseReport";
 import Evaluation from "./pages/Evaluation";
 import EvaluationTemplate from "./pages/EvaluationTemplate";
-import AssessmentSummaryReport from "./components/pages/AssessmentSummaryReport";
+import AssessmentSummaryReport from "./pages/AssessmentSummaryReport";
 import AssessmentDetailReport from "./pages/AssessmentDetailReport";
 import AssessmentGoalWiseReport from "./pages/AssessmentGoalWiseReport";
+import Login from "./pages/Login";
+import GoalList from "./components/pages/GoalList";
+import EvaluationActivationList from "./pages/EvaluationActivationList";
 
 export default function App() {
   return (
     <>
       <Router>
         <ScrollToTop />
+
         <Routes>
           {/* Dashboard Layout */}
           <Route element={<AppLayout />}>
-            <Route index path="/" element={<Home />} />
-            <Route path="/tasks" element={<Tasks />} />
+           
+            <Route index path="/home" element={<Home />} />
+
             <Route path="/Createdbyme" element={<CreatedByMe />} />
             <Route path="/goalcreation" element={<GoalCreation />} />
             <Route path="/evaluationtemplate" element={<EvaluationTemplate />} />
@@ -55,6 +60,9 @@ export default function App() {
             <Route path="/assessmentdetailreport" element={<AssessmentDetailReport />} />
             <Route path="/assessmentgoalwisereport" element={<AssessmentGoalWiseReport />} />
             <Route path="/goalevaluation" element={<Evaluation />} />
+            <Route path="/goallist" element={<GoalList />} />
+            <Route path="/evaluationactivationlist" element={<EvaluationActivationList />} />
+
 
 
 
@@ -83,7 +91,7 @@ export default function App() {
           </Route>
 
           {/* Auth Layout */}
-          <Route path="/signin" element={<SignIn />} />
+           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
 
           {/* Fallback Route */}

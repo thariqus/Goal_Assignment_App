@@ -18,21 +18,21 @@ function Evaluation() {
             id: "1",
             goalname: "Redesign Website",
             weightage: 40,
-            achieved: 30,
+            achieved: 50,
             remark: "Not completed on time",
         },
         {
             id: "2",
             goalname: "Improve Unit Test Coverage",
             weightage: 40,
-            achieved: 30,
+            achieved: 10,
             remark: "5-3-2025 Evaluation",
         },
         {
             id: "3",
             goalname: "Attend at least 2 tech conferences or workshops this year",
-            weightage: 20,
-            achieved: 20,
+            weightage: 40,
+            achieved: 30,
             remark: "Not completed on time",
         },
     ]);
@@ -104,82 +104,24 @@ function Evaluation() {
             <h1 className="text-xl font-medium pb-5">Goal Evaluation</h1>
 
             <form className="flex flex-col gap-5">
-                <div className="relative dropdown-container">
-                    <div className="flex gap-24">
-                        <label>Title:</label>
-                        <div>
-                            <button
-                                type="button"
-                                className="flex items-center gap-2 border bg-white rounded-md py-1 px-3"
-                                onClick={() =>
-                                    setOpenDropdown(openDropdown === "title" ? null : "title")
-                                }
-                            >
-                                <span
-                                    className={
-                                        selectedTitle === "Select Title"
-                                            ? "text-gray-400"
-                                            : "text-black"
-                                    }
-                                >
-                                    {selectedTitle}
-                                </span>
-                                <IoIosArrowDown style={{ color: "gray" }} />
-                            </button>
+                <div className="flex justify-between">
+                    <div className="flex gap-2">
+                        <label>Title :</label>
+                        <p>2024</p>
+                    </div>
 
-                            {openDropdown === "title" && (
-                                <div className="absolute mt-1 w-94 border rounded-md shadow-sm bg-white z-[1000]">
 
-                                    <div className="flex items-center border-b px-2 py-2">
-                                        <CiSearch style={{ fontSize: "20px", color: "grey" }} />
-                                        <input
-                                            type="text"
-                                            placeholder="Search Title..."
-                                            value={search}
-                                            onChange={(e) => setSearch(e.target.value)}
-                                            className="w-full px-2 outline-none"
-                                        />
-                                    </div>
-
-                                    <ul className="font-normal max-h-40 overflow-y-auto">
-                                        {titleOptions
-                                            .filter((item) =>
-                                                item.name.toLowerCase().includes(search.toLowerCase())
-                                            )
-                                            .map((item) => (
-                                                <li
-                                                    key={item.id}
-                                                    className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-                                                    onClick={() => {
-                                                        setSelectedTitle(item.name);
-                                                        setOpenDropdown(null);
-                                                        setSearch("");
-                                                    }}
-                                                >
-                                                    {item.name}
-                                                </li>
-                                            ))}
-                                    </ul>
-                                </div>
-                            )}
-                        </div>
+                    <div className="flex gap-2">
+                        <label>Assigned To :</label>
+                        <p>Tharique</p>
+                    </div>
+                    <div className="flex gap-2">
+                        <label htmlFor="date">Date :</label>
+                        <p>17/09/25</p>
                     </div>
                 </div>
 
-                <div className="flex gap-23">
-                    <label htmlFor="date">Date:</label>
-                    <input
-                        type="date"
-                        className="py-1 focus:outline-none border px-2 rounded-sm"
-                    />
-                </div>
-                <div className="flex gap-11">
-                    <label>Assigned To:</label>
-                    <input
-                        type="text"
-                        className="py-1 focus:outline-none border px-2 rounded-sm w-100"
-                    />
-                </div>
+
             </form>
 
 
@@ -265,30 +207,33 @@ function Evaluation() {
 
 
             <form action="" className=' flex flex-col gap-5 mt-5'>
-                <div className='flex gap-36'>
-                    <label htmlFor="name" className=''>Evaluated By:</label>
-                    <input type="text" placeholder='' className='py-1 focus:outline-none border w-100 px-2 rounded-sm' /> </div>
-                <div className='flex gap-10'>
-                    <label htmlFor="name" className='w-50'>Number of Goal Assigned:</label>
-                    <input type="number" placeholder='' className='py-1 focus:outline-none border w-100 px-2 rounded-sm' /> </div>
-                <div className='flex gap-34'>
-                    <label className='' htmlFor="name">Total % Gained:</label>
-                    <input type="text" placeholder='' className='py-1 focus:outline-none border w-100 px-2 rounded-sm' />
+                <div className='flex gap-3'>
+                    <label htmlFor="name" className=''>Evaluated By  :</label>
+                    <p>Saji</p>
+                </div>
+                <div className='flex gap-3'>
+                    <label htmlFor="name" className='w-50'>Number of Goal Assigned  :</label>
+                    <p>10</p>
+                </div>
+                <div className='flex gap-3'>
+                    <label className='' htmlFor="name">Total % Gained  :</label>
+                    <p>90%</p>
                 </div>
             </form>
 
             {/*  Buttons */}
             <div className="flex gap-5 justify-center pt-5">
+                <button className="rounded-sm py-1 bg-[#ffe4e6] px-5 flex gap-1 items-center">
+                    {/* <CiEdit style={{ fontSize: "20px" }} /> */}
+                    <span>Save as Draft</span>
+                </button>
                 <button
                     type="button"
                     className="rounded-sm py-1 text-white bg-[#972e26] px-5"
                 >
-                    Send For Approval
+                    Submit
                 </button>
-                <button className="rounded-sm py-1 bg-[#ffe4e6] px-5 flex gap-1 items-center">
-                    <CiEdit style={{ fontSize: "20px" }} />
-                    <span>Enable Editing</span>
-                </button>
+
             </div>
         </div>
     );
